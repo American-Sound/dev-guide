@@ -307,7 +307,7 @@ git rebase main
 
 Now that we have run the command, there are three possible outcomes:
 
-1. There are no differences in `main` besides our additions to `who.txt` within our test branch. Continue to [Step 2]().
+1. There are no differences in `main` besides our additions to `who.txt` within our test branch. Continue to [Step 2](#step-2-opening-our-pull-request-in-github).
 
 2. There *are* differences in `main`, but they do not conflict with our changes. Continue through Step 1.
 
@@ -324,8 +324,34 @@ Now, we are ready to open our Pull Request.
 
 ### Step 2: Opening our Pull Request in GitHub
 
-Navigate to the repository on GitHub. If you had just completed the last step right before coming to this one, you will likely see a message above the repository directory list that says 
+Navigate to the repository on GitHub. If you had just completed the last step right before coming to this one, you will likely see the following message above the repository contents:
+
+![auto pr button](./img/auto-pr-button.png)
+
+If you see that, you can click that. Otherwise, select your branch from the drobdown list on the left as we did in the [Comparing Our Changes](#comparing-our-changes) section. Now, you can open the pull request as seen below:
+
+![manual pr button](./img/manual-pr-button.png)
+
+We are now on the screen where we will fill out our pull request details. In the future, you should fill this out according to the [Pull Requests section](./contribution-styleguide.md/#pull-requests) of the [Contribution Styleguide](./contribution-styleguide.md). For the sake of this guide, fill it out with the following:
+
+* Under **Add a title**, put: `Training: \<YOUR NAME\>'s first PR`
+
+* Under **Add a description**, put:
+```
+The changes reflect my completion of the training described in [the quickstart guide](git-version-control/quickstart.md)
+```
+
+* Click on "Preview" and observe that your "the quickstart guide" text has become a link to this document.
+
+* On the right, click the gear next to **Reviewers**. Type in `ccgargantua` (me) and click on that profile.
+
+* Click the gear next to **Labels** and select `misc`.
+
+* If you would like, review your changes in the embedded `diff` at the bottom of the page.
+
+Finally, click **Create Pull Request**. Once a reviewer has marked your PR as "approved", you will be able to merge your changes in [Step 3](#step-3-merging-our-pull-request).
 
 
 ### Step 3: Merging our Pull Request
 
+By now, your pull request should have been marked as "approved" by all required reviewers, in this case me. 
