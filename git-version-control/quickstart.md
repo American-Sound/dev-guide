@@ -1,5 +1,12 @@
 # Git and GitHub Quickstart
 
+```
+Author:   Carter Dugan
+          CarterDugan@asei.com
+Created:  9/18/2025
+Modified: 9/26/2025
+```
+
 ## Table of Contents
 
 * [Disclaimer](#disclaimer)
@@ -10,11 +17,12 @@
 * [Cloning a Repository](#cloning-a-repository)
 * [Creating a Branch](#creating-a-branch)
 * [Commit Changes](#commit-changes)
-* [Opening a Pull Request](#opening-a-pull-request)
+* [Comparing Our Changes](#comparing-our-changes)
+* [Creating a Pull Request](#creating-a-pull-request)
 
 ## Disclaimer
 
-This document is a work in progress. Currently, it is under the assumption that the user is using Git at the command line, as it was intended to be used. Check back in the future for information regarding Git GUI tools, such as Git for Windows GUI or Tortoise Git's GUI utility.
+This document is a work in progress. Currently, it is under the assumption that the user is using Git at the command line, as it was intended to be used. Check back in the future for information regarding Git GUI tools, such as Git for Windows GUI or Tortoise Git's GUI utility. If you have even basic experience with Git tools, GUI or otherwise, you should be able to follow this guide just fine.
 
 ## Installing Git
 
@@ -50,7 +58,7 @@ Windows users should use the following steps to install Git:
 
 10. For **Configuring the terminal emulator to use with Git Bash**, I recommend you **Use MinTTY (the default terminal of MSYS2)**, but if you are more comfortable with Powershell, feel free to opt for that instead.
 
-11. For **Choose hte default behavior of `git pull`**, you should choose **Fast-forward or merge**. If you don't understand what these mean, don't worry, but you will see the terms **merge** versus **rebase** a lot, and they are important to know about when working with Git.
+11. For **Choose the default behavior of `git pull`**, you should choose **Fast-forward or merge**. If you don't understand what these mean, don't worry, but you will see the terms **merge** versus **rebase** a lot, and they are important to know about when working with Git.
 
 12. For **Choose a credential helper**, you should choose **Git Credential Manager**.
 
@@ -163,7 +171,23 @@ If you followed up to this point, you should be inside of your local repository 
 git branch
 ```
 
-This will list all of the branches of the local repository. As of the time that I am writing this, I have no idea how many that may be, nor what they all are. However, you should be able to at least see the primary branch `main`, and it should show as your current branch via an `*` next to it. `* main`. The `main` branch is typically where our most up-to-date code is held, meaning that code that is complete, tested, and confirmed to work is located in our `main` branch. When we make changes to code, we want to `checkout` a new branch to make changes to the code. Later, when the code is ready, we will `merge` it into the `main` branch, but for now, we are going to isolate our work to prevent interfering with other people's. Run the following command
+This will list all of the branches of the local repository. As of the time that I am writing this, I have no idea how many that may be, nor what they all are. However, you should be able to at least see the primary branch `main`, and it should show as your current branch via an `*` next to it: `* main`. The `main` branch is typically where our most up-to-date code is held, meaning that code that is complete, tested, and confirmed to work is located in our `main` branch.
+
+First things first, to save us the trouble later, we want to make sure our `main` branch is up-to-date. For this, we `pull` from the remote repository:
+
+```bash
+git pull origin main
+```
+
+Here, `origin` specifies the remote repository, and `main` specifies the branch we are pulling from. Alternatively, we can trust that our Git is configured correctly locally, and just run the shorthand of this:
+
+```bash
+git pull
+```
+
+That will `pull` from `origin` by default, and will `pull` the remote version of our **currently checked-out local branch**, which in our case is `main`. It is a good idea to pull from main any time you want to checkout a new branch.
+
+When we make changes to code, we want to `checkout` a new branch to make changes to the code. Later, when the code is ready, we will `merge` it into the `main` branch, but for now, we are going to isolate our work to prevent interfering with other people's. Run the following commands:
 
 ```bash
 git checkout -b <your-name>-test-branch
@@ -206,10 +230,102 @@ git push origin <your-name>-test-branch
 
 The first command will make the commit itself with a message (`-m`) specified within quotes. The second command will push it to the remote repository. The latter will ask for your password that we set in the [ssh configuration](#ssh-keys) step. Since you haven't pushed to this new branch, it will create the branch in the remote repository.
 
-## Opening a Pull Request
+## Comparing Our Changes
 
 Return to the GitHub page for the remote repository. By default, the branch shown will be `main`, but you'll be selecting your branch from the list.
 
 ![Branches](./img/branch-selection.png)
 
-Select your branch. Navigate to the file we edited, `dev-guide/git-version-control/who.txt`, and observe your name present. If you want, you can switch back the main branch and see that your name is not present. However, the best way to view differences between branches would be to view the `diff`.
+Select your branch. Navigate to the file we edited, `dev-guide/git-version-control/who.txt`, and observe your name present. If you want, you can switch back the main branch and see that your name is not present. However, the best way to view differences between branches would be to view the `diff`. There are a few helpful ways to view a `diff`.
+
+1. Compare the code of your current checked-out branch to a some other branch that you specify by name
+
+```bash
+git diff <some-other-branch>
+```
+
+2. Compare some branch that you specify by name to some other branch that you specify by name:
+
+```bash
+git diff <some-branch> <some-other-branch>
+```
+
+3. In GitHub, view the changes (commits) you made in a certain branch as a usefully-highlighted `diff`. You can view the commits individually by clicking on `commits` on the repository overview **with the desired branch selected**.
+
+![diff selection](./img/diff-selection.png)
+
+You'll see all the commits that were made up to this point in the repositories history, including your commits. If you click on one, you'll see the changes you made in the form of additions (`+`) or removals (`-`). You can even select certain files to isolate which changes you are currently viewing.
+
+
+## Creating a Pull Request
+
+A **pull request**, or **PR**, is the standard way of merging your changes from your branch into the main/master branch in a collaboritive software development environment. It is important to note that **PRs are not a feature of Git**, but rather a feature of Git clients, such as GitHub. Different clients may call it by different names (i.e., Git*Lab* calls them "Merge Requests", or MRs), but in practice they are all the same thing.
+
+We want to **carefully follow the same set of steps any time we do this**.
+
+### Step 1: Update our Branch with Any Changes to Main
+
+This is perhaps the **most important step** in the process, and should always be done **first**. Before we ask for our changes to be merged into the `main` branch, we want our code to otherwise be up-to-date with what is already in `main`. If you remember the step earlier where we `pull`'d from `origin main`, we are essentially doing that now, but with a few extra steps to fit this context. In practice, it would be **easiest to do this anytime you are working on a project**, as it will reduce the number of potential **merge conflicts** later on.
+
+First, let's make sure we don't have any outstanding changes that haven't been committed. If you have followed up to this point, you shouldn't.
+
+```sh
+git status
+```
+
+This should yield something like the following:
+
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+If your output shows changes, staged or unstaged, you should refer back to the [Commit Changes](#commit-changes) step.
+
+Now, let's sync our branch with the current state of `main`. First, switch over to the `main` branch, and `pull` any changes from the remote.
+
+```sh
+git checkout main
+git pull
+```
+
+It is possible, and in many cases, typical that `main` might not have any changes. For the sake of this guide, humor me and follow along. You should still perform these steps each time.
+
+Now, let's go back into our branch.
+
+```sh
+git checkout <your-name>-test-branch
+```
+
+We are going to `rebase` our branch on the `main` branch. Rebasing and merging are two ways to synchronize code across two branches. The differences are important, but this quickstart guide is not an appropriate place to discuss them. For now, just look at them as two different ways to accomplish the same goal at a high-level, take it with a huge grain of salt, and push forward.
+
+```sh
+git rebase main
+```
+
+Now that we have run the command, there are three possible outcomes:
+
+1. There are no differences in `main` besides our additions to `who.txt` within our test branch. Continue to [Step 2]().
+
+2. There *are* differences in `main`, but they do not conflict with our changes. Continue through Step 1.
+
+3. There *are* differences in `main`, and they *do* conflict with our changes. If you encounter this, please consult the guide on [merge conflict resolution](./merge-conflict-resolution.md).
+
+Assuming case 2 applies to you, the reader, at this point things are very simple. *If* this were a merge, we would need to `commit` the changes from the merge like we did in the [Commit Changes](#commit-changes) section. However, for a rebase, we get to skip straight to a `push` to our remote branch.
+
+```sh
+git push origin <your-name>-test-branch
+```
+
+Now, we are ready to open our Pull Request.
+
+
+### Step 2: Opening our Pull Request in GitHub
+
+Navigate to the repository on GitHub. If you had just completed the last step right before coming to this one, you will likely see a message above the repository directory list that says 
+
+
+### Step 3: Merging our Pull Request
+
