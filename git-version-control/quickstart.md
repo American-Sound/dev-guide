@@ -19,6 +19,9 @@ Modified: 9/26/2025
 * [Commit Changes](#commit-changes)
 * [Comparing Our Changes](#comparing-our-changes)
 * [Creating a Pull Request](#creating-a-pull-request)
+    * [Step 1: Update Our Branch with Any Changes to Main](#step-1-update-our-branch-with-any-changes-to-main)
+    * [Step 2: Opening Our Pull Request in GitHub](#step-2-opening-our-pull-request-in-github)
+    * [Step 3: Merging Our Pull Request](#step-3-merging-our-pull-request)
 
 ## Disclaimer
 
