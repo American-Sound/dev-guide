@@ -338,7 +338,7 @@ We are now on the screen where we will fill out our pull request details. In the
 
 * Under **Add a description**, put:
 ```
-The changes reflect my completion of the training described in [the quickstart guide](git-version-control/quickstart.md)
+The changes reflect my completion of the training described in [the quickstart guide](git-version-control/quickstart.md).
 ```
 
 * Click on "Preview" and observe that your "the quickstart guide" text has become a link to this document.
@@ -354,4 +354,14 @@ Finally, click **Create Pull Request**. Once a reviewer has marked your PR as "a
 
 ### Step 3: Merging our Pull Request
 
-By now, your pull request should have been marked as "approved" by all required reviewers, in this case me. 
+By now, your pull request should have been marked as "approved" by all required reviewers, in this case me. If not, it's for one of three reasons:
+
+1. I have not gotten to your PR yet.
+
+2. There is a mistake in your PR, be it invalid details or more than just `who.txt` having changes. In this case, look at my comments for some guidance, or reach out to me for more info :)
+
+3. In the time since opening the PR, changes have been made to the main branch and your branch now has conflicts. Please see scenario 3 at the end of [Step 1](#step-1-update-our-branch-with-any-changes-to-main). In short, you will need to locally rebase your branch around main once again, and resolve the conflicts. Afterwards, push your changes, and those changes should reflect in this PR once you have done so.
+
+If none of these apply and your pull request is marked as approved, click on **Merge pull request** as seen below, leave the following **Commit message** and **Extended description** unchanged, and click **Confirm merge**.
+
+Congratulations! You have completed the Git Version Control Quickstart Guide!
