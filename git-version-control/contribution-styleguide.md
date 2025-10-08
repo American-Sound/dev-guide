@@ -19,10 +19,6 @@ Modified: 10/8/2025
 * [Pull Requests](#pull-requests)
     * [Conflict Resolution](#conflict-resolution)
     * [Details](#details)
-        * [Titles](#titles)
-        * [Descriptions](#descriptions)
-        * [Reviewers](#reviewers)
-        * [Labels](#labels)
     * [Review Process](#review-process)
     * [Merge Strategy](#merge-strategy)
 
